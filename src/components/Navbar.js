@@ -56,7 +56,8 @@ class Navbar extends Component {
             rounded={"full"}
           >
             <Text id="account" pr={4} color={"gray.100"}>
-              {this.props.account.slice(0, 6)}...{this.props.account.slice(-4)}
+              {this.props.account}
+              {/* {this.props.account.slice(0, 6)}...{this.props.account.slice(-4)} */}
             </Text>
             <Image src={MetaMaskLogo} w={"20px"} h={"20px"} />
           </Box>
