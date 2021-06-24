@@ -9,6 +9,7 @@ contract Decentragram {
     uint id;
     string hash;
     string description;
+    string timestamp;
     uint tipAmount;
     address payable author;
   }
@@ -17,6 +18,7 @@ contract Decentragram {
     uint id,
     string hash,
     string description,
+    string timestamp,
     uint tipAmount,
     address payable author
   );
@@ -25,6 +27,7 @@ contract Decentragram {
     uint id,
     string hash,
     string description,
+    string timestamp,
     uint tipAmount,
     address payable author
   );
@@ -33,11 +36,13 @@ contract Decentragram {
     name = "Decentragram";
   }
 
-  function uploadImage(string memory _imgHash, string memory _description) public {
+  function uploadImage(string memory _imgHash, string memory _description, string memory _timestamp) public {
     // Make sure the image hash exists
     require(bytes(_imgHash).length > 0);
     // Make sure image description exists
     require(bytes(_description).length > 0);
+
+    require(bytes(_timestamp).length > 0);
     // Make sure uploader address exists
     require(msg.sender!=address(0));
 
@@ -45,9 +50,9 @@ contract Decentragram {
     imageCount ++;
 
     // Add Image to the contract
-    images[imageCount] = Image(imageCount, _imgHash, _description, 0, msg.sender);
+    images[imageCount] = Image(imageCount, _imgHash, _description, _timestamp, 0, msg.sender);
     // Trigger an event
-    emit ImageCreated(imageCount, _imgHash, _description, 0, msg.sender);
+    emit ImageCreated(imageCount, _imgHash, _description, _timestamp, 0, msg.sender);
   }
 
   function tipImageOwner(uint _id) public payable {
@@ -64,6 +69,6 @@ contract Decentragram {
     // Update the image
     images[_id] = _image;
     // Trigger an event
-    emit ImageTipped(_id, _image.hash, _image.description, _image.tipAmount, _author);
+    emit ImageTipped(_id, _image.hash, _image.description, _image.timestamp, _image.tipAmount, _author);
   }
 }

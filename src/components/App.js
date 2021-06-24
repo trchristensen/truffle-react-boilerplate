@@ -1,7 +1,5 @@
 import Decentragram from '../abis/Decentragram.json'
-import React, { Component } from 'react';
-import Identicon from 'identicon.js';
-import Navbar from './Navbar'
+import React, { Component } from 'react';import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
 import './App.css';
@@ -85,6 +83,9 @@ class App extends Component {
   uploadImage = description => {
     console.log("Submitting file to ipfs...")
 
+    let timestamp = new Date().getTime().toString();
+    console.log(timestamp)
+
     //adding file to the IPFS
     ipfs.add(this.state.buffer, (error, result) => {
       console.log('Ipfs result', result)
@@ -94,7 +95,7 @@ class App extends Component {
       }
 
       this.setState({ loading: true })
-      this.state.decentragram.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.decentragram.methods.uploadImage(result[0].hash, description, timestamp).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
     })
