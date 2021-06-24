@@ -1,38 +1,67 @@
-import React, { Component } from 'react';
-import Identicon from 'identicon.js';
-import photo from '../photo.png'
+import React, { Component } from "react";
+import Identicon from "identicon.js";
+import MetaMaskLogo from "../metamask.02e3ec27.png";
+import { Box } from "@chakra-ui/layout";
+import { Image, Text } from "@chakra-ui/react";
 
-class Navbar extends Component {
+class Navbar extends Component {  
 
   render() {
     return (
-      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <Box
+        className="navbar"
+        w={"full"}
+        d={"flex"}
+        justifyContent={"space-between"}
+        // position={"fixed"}
+        // top={0}
+        bg={"gray.200"}
+        flexWrap={"nowrap"}
+        py={2}
+        px={4}
+        fontWeight={"600"}
+      >
         <a
           className="navbar-brand col-sm-3 col-md-2 mr-0"
           href="http://www.dappuniversity.com/bootcamp"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={photo} width="30" height="30" className="d-inline-block align-top" alt="" />
-          Decentragram
+          dapp
         </a>
-        <ul className="navbar-nav px-3">
-          <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-            <small className="text-secondary">
-              <small id="account">{this.props.account}</small>
-            </small>
-            { this.props.account
-              ? <img
-                className='ml-2'
-                width='30'
-                height='30'
-                src={`data:image/png;base64,${new Identicon(this.props.account, 30).toString()}`}
-              />
-              : <span></span>
-            }
-          </li>
-        </ul>
-      </nav>
+        <Box
+          d={"flex"}
+          flexWrap={"nowrap"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          bg={"gray.700"}
+          rounded={"full"}
+        >
+          <Box
+            fontSize={"sm"}
+            color={"gray.400"}
+            d={"flex"}
+            alignItems={"center"}
+            p={2}
+            px={4}
+          >
+            Ξ{this.props.balance}
+          </Box>
+          <Box
+            d={"flex"}
+            alignItems={"center"}
+            bg={"gray.500"}
+            p={2}
+            px={4}
+            rounded={"full"}
+          >
+            <Text id="account" pr={4} color={"gray.100"}>
+              {this.props.account.slice(0, 6)}...{this.props.account.slice(-4)}
+            </Text>
+            <Image src={MetaMaskLogo} w={"20px"} h={"20px"} />
+          </Box>
+        </Box>
+      </Box>
     );
   }
 }

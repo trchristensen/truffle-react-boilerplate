@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Identicon from 'identicon.js';
+// import Identicon from 'identicon.js';
 
 class Main extends Component {
 
@@ -27,19 +27,19 @@ class Main extends Component {
                         placeholder="Image description..."
                         required />
                   </div>
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Upload!</button>
+                <button type="submit" className="btn btn-primary btn-block btn-lg">Upload!</button>
               </form>
               <p>&nbsp;</p>
               { this.props.images.map((image, key) => {
                 return(
                   <div className="card mb-4" key={key} >
                     <div className="card-header">
-                      <img
+                      {/* <img
                         className='mr-2'
                         width='30'
                         height='30'
                         src={`data:image/png;base64,${new Identicon(image.author, 30).toString()}`}
-                      />
+                      /> */}
                       <small className="text-muted">{image.author}</small>
                     </div>
                     <ul id="imageList" className="list-group list-group-flush">
@@ -55,12 +55,12 @@ class Main extends Component {
                           className="btn btn-link btn-sm float-right pt-0"
                           name={image.id}
                           onClick={(event) => {
-                            let tipAmount = window.web3.utils.toWei('0.1', 'Ether')
+                            let tipAmount = window.web3.utils.toWei('0.01', 'Ether')
                             console.log(event.target.name, tipAmount)
                             this.props.tipImageOwner(event.target.name, tipAmount)
                           }}
                         >
-                          TIP 0.1 ETH
+                          TIP 0.01 ETH
                         </button>
                       </li>
                     </ul>

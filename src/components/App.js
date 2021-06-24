@@ -20,7 +20,8 @@ class App extends Component {
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
+      // await window.ethereum.enable()
+      window.web3.eth.requestAccounts().then(console.log);
     }
     else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
@@ -32,12 +33,20 @@ class App extends Component {
 
   async loadBlockchainData() {
     const web3 = window.web3
+    
     // Load account
     const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0] })
+    
+    console.log(accounts)
+    const getBalance = await web3.eth.getBalance(accounts[0]);
+    const theBalance = window.web3.utils.fromWei(getBalance);
+    const balance = parseFloat(theBalance).toFixed(3);
+    this.setState({ account: accounts[0], balance: balance });
+    
     // Network ID
     const networkId = await web3.eth.net.getId()
     const networkData = Decentragram.networks[networkId]
+    console.log('networkData', networkData)
     if(networkData) {
       const decentragram = new web3.eth.Contract(Decentragram.abi, networkData.address)
       this.setState({ decentragram })
@@ -102,6 +111,7 @@ class App extends Component {
     super(props)
     this.state = {
       account: '',
+      balance: 0,
       decentragram: null,
       images: [],
       loading: true
@@ -115,16 +125,19 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar account={this.state.account} />
-        { this.state.loading
-          ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
-              images={this.state.images}
-              captureFile={this.captureFile}
-              uploadImage={this.uploadImage}
-              tipImageOwner={this.tipImageOwner}
-            />
-        }
+        <Navbar balance={this.state.balance} account={this.state.account} />
+        {this.state.loading ? (
+          <div id="loader" className="text-center mt-5">
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <Main
+            images={this.state.images}
+            captureFile={this.captureFile}
+            uploadImage={this.uploadImage}
+            tipImageOwner={this.tipImageOwner}
+          />
+        )}
       </div>
     );
   }
