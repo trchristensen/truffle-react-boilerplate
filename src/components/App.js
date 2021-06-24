@@ -38,7 +38,7 @@ const App = () => {
           <p>Loading...</p>
         </div>
       ) : (
-        <Main images={data.images} />
+        <Main data={data} />
       )}
     </div>
   );

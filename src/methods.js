@@ -98,13 +98,15 @@ export const captureFile = (event) => {
   reader.readAsArrayBuffer(file);
 
   reader.onloadend = () => {
-    return Buffer(reader.result).then((res) => console.log('buffered image', res))
+    console.log('buffer', Buffer(reader.result))
+    return {buffer: Buffer(reader.result)}
   };
+
 };
 
 
 /**
- * Represents a book.
+ * Uploads the image to ipfs.
  * @param {hash} buffer - The hash of the image being uploaded.
  * @param {string} description - Description of the image.
  * @returns {Object} - The smart contract object.
@@ -113,6 +115,13 @@ export const captureFile = (event) => {
 export const uploadImage = (buffer, description, smartContract, account) => {
   console.log("Submitting file to ipfs...");
   let timestamp = new Date().getTime().toString();
+
+  console.log({
+    buffer,
+    description,
+    smartContract,
+    account
+  })
   //adding file to the IPFS
   ipfs.add(buffer, (error, result) => {
     console.log("Ipfs result", result);
