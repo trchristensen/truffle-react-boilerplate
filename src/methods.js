@@ -12,7 +12,7 @@ export const ipfs = ipfsClient({
  * Loads Web3 (MetaMask).
  * @returns {Object} - The book object itself.
  */
-export const loadWeb3 = async (callback) => {
+export const loadWeb3 = async () => {
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
     // await window.ethereum.enable()
@@ -25,7 +25,7 @@ export const loadWeb3 = async (callback) => {
       "Non-Ethereum browser detected. You should consider trying MetaMask!"
     );
   }
-  callback();
+  
 };
 
 
